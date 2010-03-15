@@ -1,0 +1,14 @@
+#include <exception>
+#include <osg/Vec2b>
+#include <osg/Vec2d>
+#include <osg/Vec2f>
+#include <osg/Vec2s>
+#include <osg/Vec3b>
+#include <osg/Vec3d>
+#include <osg/Vec3f>
+#include <osg/Vec3s>
+#include <osg/Vec4b>
+#include <osg/Vec4d>
+#include <osg/Vec4f>
+#include <osg/Vec4s>
+#include <osg/Vec4ub>
