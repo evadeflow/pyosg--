@@ -55,6 +55,9 @@ include_directories(${PYTHON_INCLUDE_PATH}
 
 link_directories(${Boost_LIBRARY_DIRS})
 
+# Don't prepend 'lib' to the names of modules built
+set(CMAKE_SHARED_MODULE_PREFIX "")
+
 add_subdirectory(osg)
 #add_subdirectory(osgDB)
 #add_subdirectory(osgFX)
