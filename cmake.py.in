@@ -1,0 +1,30 @@
+# Define some variables that all code generators are likely to need.
+# The @FOO@ elements in this file are interpolated by cmake's configure()
+# command so that they contain the correct values. (Note: the names of cmake's
+# config vars is retained, including the inconsistencies. :-})
+#
+__all__ = ['CMAKE_SOURCE_DIR', 'GCCXML_COMPILER', 'GCCXML_DEFINES',
+           'GCCXML_PATH', 'OSG_INCLUDE_DIR', 'abspath', 'create_gccxml_cache']
+
+CMAKE_BINARY_DIR = "@CMAKE_BINARY_DIR@"
+CMAKE_SOURCE_DIR = "@CMAKE_SOURCE_DIR@"
+GCCXML_COMPILER = "@GCCXML_COMPILER@"
+GCCXML_DEFINES = "@GCCXML_DEFINES@"
+GCCXML = "@GCCXML@"
+OSG_INCLUDE_DIR = "@OSG_INCLUDE_DIR@"
+Boost_INCLUDE_DIR = "@Boost_INCLUDE_DIR@"
+
+def abspath(path):
+    """ Given a path (which may be relative), return its absolute path"""
+    import os
+    return os.path.abspath(os.path.dirname(path))
+
+def create_gccxml_cache(header_name, path):
+    import os
+    from pygccxml import parser
+    currpath = abspath(path)
+    cache_includes = currpath + os.path.sep + header_name
+    cache_file = os.path.splitext(cache_includes)[0] + '.xml'
+    print "cache_includes, cache_file =", cache_includes, cache_file
+    gccxml_cache = parser.create_cached_source_fc(cache_includes, cache_file)
+    return gccxml_cache

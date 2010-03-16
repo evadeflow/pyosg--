@@ -1,8 +1,8 @@
 import os
-#import sys
+import sys
+import cmake
 from pyplusplus import module_builder
 #from pyplusplus.module_builder import call_policies
-from pygccxml import parser
 
 # Python string template used to declare a C++ function template for helper
 # functions used to access the x, y, z, etc. components of a vector from
@@ -72,7 +72,7 @@ static void Vec_setitem(T& self, int index, typename T::value_type value)
 
 
 def getParentClasses(funcList):
-  """ Given a set of member functions, returned a list of the classes that
+  """ Given a set of member functions, return a list of the classes that
       contain them, removing duplicates
   """
   classes = {}
@@ -80,16 +80,14 @@ def getParentClasses(funcList):
       classes[func.parent.name] = 1
   return classes.keys()
 
-cacheIncludes = '@CMAKE_CURRENT_SOURCE_DIR@/osg.pypp.h'
-cacheFile = os.path.basename(os.path.splitext(cacheIncludes)[0]) + '.xml'
-gccxml_cache = parser.create_cached_source_fc(cacheIncludes, cacheFile)
+gccxml_cache = cmake.create_gccxml_cache('osg.pypp.h', sys.argv[0])
 
 mb = module_builder.module_builder_t(
-        [ gccxml_cache ]
-        , gccxml_path='@GCCXML@'
-        , include_paths=['@OSG_INCLUDE_DIR@']
-        , define_symbols=[@GCCXML_DEFINES@]
-        , cflags='--gccxml-compiler @GCCXML_COMPILER@')
+        [gccxml_cache]
+        , gccxml_path=cmake.GCCXML
+        , include_paths=[cmake.OSG_INCLUDE_DIR]
+        , define_symbols=[cmake.GCCXML_DEFINES]
+        , cflags='--gccxml-compiler ' + cmake.GCCXML_COMPILER)
 
 # Make all ctors explicit
 mb.constructors().allow_implicit_conversion = False
@@ -144,7 +142,7 @@ for varName in ('x', 'y', 'z', 'w', 'r', 'g', 'b', 'a'):
     for cls in classes:
         regcode = VEC_XYZRGB_REG % dict(VarName=varName, ClsName=cls)
         mb.class_(cls).add_registration_code(regcode)
-        
+
 
 # Give the module a name (will be used when doing 'import blah' in python)
 mb.build_code_creator(module_name='osg')
