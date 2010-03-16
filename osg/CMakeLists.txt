@@ -20,7 +20,10 @@ if(WIN32)
                               ".pyd")
 endif()
 
-target_link_libraries(osg ${PYTHON_LIBRARIES} ${OPENSCENEGRAPH_LIBRARIES})
+target_link_libraries(osg
+                        ${PYTHON_LIBRARIES}
+                        ${OPENSCENEGRAPH_LIBRARIES}
+                        ${Boost_LIBRARIES})
 
 add_custom_command(
         OUTPUT

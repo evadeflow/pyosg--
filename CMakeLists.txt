@@ -25,10 +25,11 @@ mark_as_advanced(LIBRARY_OUTPUT_PATH)
 mark_as_advanced(EXECUTABLE_OUTPUT_PATH)
 
 # Every wrapped lib needs these, so just find 'em here
-find_package(OSG REQUIRED)
-find_package(Boost REQUIRED)
+find_package(OpenSceneGraph REQUIRED)
+find_package(Boost 1.36.0 REQUIRED COMPONENTS python)
 find_package(GCCXML REQUIRED)
 find_package(OpenSceneGraph REQUIRED)
+find_package(PythonInterp REQUIRED)
 find_package(PythonLibs REQUIRED)
 
 if(WIN32)
@@ -44,6 +45,8 @@ if(WIN32)
   else()
     set(GCCXML_COMPILER "\"\"")
   endif()
+else()
+    set(GCCXML_COMPILER "g++")
 endif()
 
 include_directories(${PYTHON_INCLUDE_PATH}
