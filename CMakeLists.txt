@@ -4,7 +4,7 @@
 #
 #  c:\d\PyOSG++\build>cmake -DCMAKE_INCLUDE_PATH=c:\pt\externals\include \
 #   -DCMAKE_LIBRARY_PATH=c:\pt\externals\lib \
-#   -DCMAKE_PREFIX_PATH="C:\Program Files (x86)\gccxml 0.9\bin" ..
+#   -DCMAKE_PREFIX_PATH="C:\pt\externals\bin" ..
 #
 cmake_minimum_required(VERSION 2.6)
 
@@ -26,7 +26,7 @@ mark_as_advanced(EXECUTABLE_OUTPUT_PATH)
 
 # Every wrapped lib needs these, so just find 'em here
 find_package(OpenSceneGraph REQUIRED)
-find_package(Boost 1.36.0 REQUIRED COMPONENTS python)
+find_package(Boost REQUIRED COMPONENTS python)
 find_package(GCCXML REQUIRED)
 find_package(OpenSceneGraph REQUIRED)
 find_package(PythonInterp REQUIRED)
