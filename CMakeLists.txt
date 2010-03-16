@@ -34,7 +34,6 @@ find_package(PythonLibs REQUIRED)
 
 if(WIN32)
   # Set a few platform conditionals needed by OSG
-  # (TODO: Check what, if anything, is required on Linux)
   set(GCCXML_DEFINES "'_MSCVER', 'WIN32'")
 
   # Tell gccxml which version of Visual Studio to simulate
@@ -46,6 +45,7 @@ if(WIN32)
     set(GCCXML_COMPILER "\"\"")
   endif()
 else()
+    # Assume g++ if not WIN32
     set(GCCXML_COMPILER "g++")
 endif()
 
