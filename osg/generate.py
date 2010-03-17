@@ -82,7 +82,8 @@ def getParentClasses(funcList):
       classes[func.parent.name] = 1
   return classes.keys()
 
-gccxml_cache = cmake.create_gccxml_cache('osg.pypp.h', sys.argv[0])
+cache_header = os.path.join(cmake.abspath(sys.argv[0]), 'osg.pypp.h')
+gccxml_cache = cmake.create_gccxml_cache(cache_header)
 
 mb = module_builder.module_builder_t(
         [gccxml_cache]

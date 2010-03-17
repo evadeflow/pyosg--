@@ -19,13 +19,9 @@ def abspath(path):
     import os
     return os.path.abspath(os.path.dirname(path))
 
-def create_gccxml_cache(header_name, path):
-    import os
+def create_gccxml_cache(cache_header):
+    from os.path import basename, splitext
     from pygccxml import parser
-    currpath = abspath(path)
-    cache_includes = currpath + os.path.sep + header_name
-    cache_file = os.path.basename(os.path.splitext(cache_includes)[0] +
-                                  '.xml')
-    print "cache_includes, cache_file =", cache_includes, cache_file
-    gccxml_cache = parser.create_cached_source_fc(cache_includes, cache_file)
+    cache_file = basename(splitext(cache_header)[0] + '.xml')
+    gccxml_cache = parser.create_cached_source_fc(cache_header, cache_file)
     return gccxml_cache
