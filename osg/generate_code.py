@@ -86,7 +86,7 @@ mb = module_builder.module_builder_t(
         [gccxml_cache]
         , gccxml_path=cmake.GCCXML
         , include_paths=[cmake.OSG_INCLUDE_DIR]
-        , define_symbols=[cmake.GCCXML_DEFINES]
+        , define_symbols=cmake.GCCXML_DEFINES
         , cflags='--gccxml-compiler ' + cmake.GCCXML_COMPILER)
 
 # Make all ctors explicit

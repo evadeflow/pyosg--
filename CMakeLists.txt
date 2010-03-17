@@ -34,7 +34,7 @@ find_package(PythonLibs REQUIRED)
 
 if(WIN32)
   # Set a few platform conditionals needed by gccxml when parsing OSG headers
-  set(GCCXML_DEFINES "['_MSCVER', 'WIN32']")
+  set(GCCXML_DEFINES "_MSCVER WIN32")
 
   # Tell gccxml which version of Visual Studio to simulate
   if(MSVC80)
@@ -64,7 +64,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake.py.in
                @ONLY)
 
 macro(ADD_PYTHON_WRAPPER name generator_py_script)
-    message("Hi, Dave!")
     add_library(${name} MODULE ${CMAKE_CURRENT_BINARY_DIR}/generated.cpp)
 
     set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/generated.cpp
