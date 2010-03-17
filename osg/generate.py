@@ -151,4 +151,4 @@ mb.build_code_creator(module_name='osg')
 mb.code_creator.license = '//Boost Software License( http://boost.org/more/license_info.html )'
 
 # Write code to disk
-mb.write_module( os.path.join( os.path.abspath('.'), 'generated.cpp' ) )
+mb.write_module( os.path.join( os.path.abspath('.'), 'bindings.cpp' ) )

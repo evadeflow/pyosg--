@@ -32,22 +32,12 @@ find_package(OpenSceneGraph REQUIRED)
 find_package(PythonInterp REQUIRED)
 find_package(PythonLibs REQUIRED)
 
-if(WIN32)
-  # Set a few platform conditionals needed by gccxml when parsing OSG headers
-  set(GCCXML_DEFINES "_MSCVER WIN32")
+# Include custom functions
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules;${CMAKE_MODULE_PATH}")
+include(custom_functions)
 
-  # Tell gccxml which version of Visual Studio to simulate
-  if(MSVC80)
-    set(GCCXML_COMPILER "msvc8")
-  elseif(MSVC71)
-    set(GCCXML_COMPILER "msvc71")
-  else()
-    set(GCCXML_COMPILER "\"\"")
-  endif()
-else()
-    # Assume g++ if not WIN32
-    set(GCCXML_COMPILER "g++")
-endif()
+# Invoke custom function to create a cmake.py settings module
+create_cmake_py_module()
 
 include_directories(${PYTHON_INCLUDE_PATH}
                     ${Boost_INCLUDE_DIR}
@@ -57,34 +47,6 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 # Don't prepend 'lib' to the names of modules built
 set(CMAKE_SHARED_MODULE_PREFIX "")
-
-# Create the cmake.py file used by all generators
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake.py.in
-               ${CMAKE_CURRENT_BINARY_DIR}/cmake.py
-               @ONLY)
-
-macro(ADD_PYTHON_WRAPPER name generator_py_script)
-    add_library(${name} MODULE ${CMAKE_CURRENT_BINARY_DIR}/generated.cpp)
-
-    set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/generated.cpp
-                                 PROPERTIES
-                                   GENERATED
-                                     TRUE)
-    if(WIN32)
-      set_target_properties(${name}
-                              PROPERTIES
-                                SUFFIX
-                                  ".pyd")
-    endif()
-
-    add_custom_command(
-            OUTPUT
-              ${CMAKE_CURRENT_BINARY_DIR}/generated.cpp
-            COMMAND
-              ${CMAKE_COMMAND} -DCMAKE_PY_MODULE_DIR=${CMAKE_BINARY_DIR} -DGENERATOR_PY_SCRIPT=${generator_py_script} -P ${CMAKE_SOURCE_DIR}/generate_code.cmake
-            DEPENDS
-              ${CMAKE_BINARY_DIR}/cmake.py)
-endmacro()
 
 
 add_subdirectory(osg)
