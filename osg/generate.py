@@ -147,7 +147,7 @@ for varName in ('x', 'y', 'z', 'w', 'r', 'g', 'b', 'a'):
 
 
 # Give the module a name (will be used when doing 'import blah' in python)
-mb.build_code_creator(module_name='osg')
+mb.build_code_creator(module_name=MODULE_NAME)
 
 # Here's how you'd include a license statement at the top of each file
 mb.code_creator.license = '//Boost Software License(http://boost.org/more/license_info.html)'
