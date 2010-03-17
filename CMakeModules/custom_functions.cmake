@@ -1,12 +1,15 @@
-function(add_python_wrapper name)
-    add_library(${name} MODULE ${CMAKE_CURRENT_BINARY_DIR}/bindings.cpp)
+function(add_python_wrapper wrapper_name generator_name)
+    set(bindings_file
+        ${CMAKE_CURRENT_BINARY_DIR}/${wrapper_name}_bindings.cpp)
 
-    set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/bindings.cpp
+    add_library(${wrapper_name} MODULE ${bindings_file})
+
+    set_source_files_properties(${bindings_file}
                                  PROPERTIES
                                    GENERATED
                                      TRUE)
     if(WIN32)
-      set_target_properties(${name}
+      set_target_properties(${wrapper_name}
                               PROPERTIES
                                 SUFFIX
                                   ".pyd")
@@ -14,13 +17,13 @@ function(add_python_wrapper name)
 
     add_custom_command(
             OUTPUT
-              ${CMAKE_CURRENT_BINARY_DIR}/bindings.cpp
+              ${bindings_file}
             COMMAND
               ${CMAKE_COMMAND} -DPY_MODULE_DIR=${CMAKE_BINARY_DIR}
-              -DPYPP_SCRIPT=${CMAKE_CURRENT_SOURCE_DIR}/generate.py
+              -DPYPP_SCRIPT=${CMAKE_CURRENT_SOURCE_DIR}/${generator_name}
               -P ${CMAKE_SOURCE_DIR}/CMakeModules/generate.cmake
             COMMENT
-              Generating ${CMAKE_CURRENT_BINARY_DIR}/bindings.cpp
+              Generating ${bindings_file}
             DEPENDS
               ${CMAKE_BINARY_DIR}/cmake.py)
 endfunction()

@@ -4,6 +4,8 @@ import cmake
 from pyplusplus import module_builder
 #from pyplusplus.module_builder import call_policies
 
+MODULE_NAME = 'osg'
+
 # Python string template used to declare a C++ function template for helper
 # functions used to access the x, y, z, etc. components of a vector from
 # python.  (The goal is to expose the x(), y(), z() member functions used by
@@ -33,7 +35,7 @@ add_property(
     "%(VarName)s"
     , &Vec_%(VarName)s_getter<osg::%(ClsName)s>
     , &Vec_%(VarName)s_setter<osg::%(ClsName)s>
-    , "%(VarName)s component of the vector" )
+    , "%(VarName)s component of the vector")
 """
 
 
@@ -148,7 +150,8 @@ for varName in ('x', 'y', 'z', 'w', 'r', 'g', 'b', 'a'):
 mb.build_code_creator(module_name='osg')
 
 # Here's how you'd include a license statement at the top of each file
-mb.code_creator.license = '//Boost Software License( http://boost.org/more/license_info.html )'
+mb.code_creator.license = '//Boost Software License(http://boost.org/more/license_info.html)'
 
 # Write code to disk
-mb.write_module( os.path.join( os.path.abspath('.'), 'bindings.cpp' ) )
+bindings_file = MODULE_NAME + '_bindings.cpp'
+mb.write_module(os.path.join(os.path.abspath('.'), bindings_file))

@@ -1,4 +1,4 @@
-add_python_wrapper(osg ${CMAKE_CURRENT_SOURCE_DIR}/generate.py)
+add_python_wrapper(osg generate.py)
 
 target_link_libraries(osg
                         ${PYTHON_LIBRARIES}
