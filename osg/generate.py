@@ -120,9 +120,9 @@ for cls in mb.classes(lambda cls: cls.name.startswith('Vec')):
     # Register functions to get container-like behavior in python
     # (takes the place of operator[](), does range-checking, permits iteration...)
     cname = cls.name
-    cls.add_registration_code('def("__len__", &Vec_len<osg::%s>)' % cname); 
-    cls.add_registration_code('def("__getitem__", &Vec_getitem<osg::%s>)' % cname);
-    cls.add_registration_code('def("__setitem__", &Vec_setitem<osg::%s>)' % cname);
+    cls.add_registration_code('def("__len__", &Vec_len<osg::%s>)' % cname)
+    cls.add_registration_code('def("__getitem__", &Vec_getitem<osg::%s>)' % cname)
+    cls.add_registration_code('def("__setitem__", &Vec_setitem<osg::%s>)' % cname)
 
 
 # Special handling for Vec member functions that return a reference
